@@ -10,15 +10,18 @@ const AddTask = () => {
     const router = useRouter();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [newTaskValue, setNewTaskValue] = useState<string>("");
+    const [newDescriptionValue, setNewDescriptioValue] = useState<string>("");
     const handleSubmitNewTask: FormEventHandler<HTMLFormElement> = 
     async (e) => {
       e.preventDefault();
       // console.log(newTaskValue);
       await addTodo({
         id: uuidv4(),
-        text: newTaskValue
+        text: newTaskValue,
+        description: newDescriptionValue
       })
       setNewTaskValue("");
+      setNewDescriptioValue("");
       setModalOpen(false);
       router.refresh();
   };
@@ -29,21 +32,26 @@ const AddTask = () => {
           Add a New Task
           </button>
           <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
-            <form onSubmit={handleSubmitNewTask}>
-              <h3 className="font-bold text-lg">Add new task</h3>
-              <div className="modal-action">
+            <h3 className="font-bold text-lg text-slate-500">Add New Task</h3>
+              <form onSubmit={handleSubmitNewTask} action="" className="form mt-6">  
                 <input 
                   value={newTaskValue}
                   onChange={(e) => setNewTaskValue(e.target.value)}
                   type="text" 
-                  placeholder="Type here" 
+                  placeholder="New Task" 
                   className="input input-bordered w-full" 
                 />
-                <button type="submit" className="btn">
-                  Submit
+                <input 
+                  value={newDescriptionValue}
+                  onChange={(e) => setNewDescriptioValue(e.target.value)}
+                  type="text" 
+                  placeholder="Description" 
+                  className="input input-bordered w-full mt-2" 
+                />
+                <button type="submit" className="text-slate-500 btn mt-4">
+                  SUBMIT
                 </button>
-              </div>
-            </form>
+              </form>
           </Modal>
         </div>
     );

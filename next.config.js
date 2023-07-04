@@ -1,4 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const exportPathMap = {}
 
-module.exports = nextConfig
+module.exports = exportPathMap

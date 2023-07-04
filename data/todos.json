@@ -2,7 +2,13 @@
   "tasks": [
     {
       "id": "1",
-      "text": "learn next js"
+      "text": "learn next js",
+      "description": "membuat crud"
+    },
+    {
+      "id": "951c88a7-e890-45e2-904c-8502649c4f3d",
+      "text": "learn programming",
+      "description": "menonton tutorial di youtube"
     }
   ]
 }
