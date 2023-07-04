@@ -20,12 +20,15 @@ const Task: React.FC<TaskProps> = ({ task }) => {
       e.preventDefault();
       await editTodo({
         id: task.id,
-        text: taskToEdit
+        text: taskToEdit,
+        description: descToEdit
       })
       setTaskToEdit("");
+      setDescToEdit("");
       setOpenModalEdit(false);
       router.refresh();
     };
+    const [descToEdit, setDescToEdit] = useState<string>(task.description);
 
     const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
     const handleDeleteTask = async (id: string) => {
@@ -34,40 +37,50 @@ const Task: React.FC<TaskProps> = ({ task }) => {
       router.refresh();
     }
     return (
-      <tr key={task.id}>
-        <td className="w-2/5 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">{task.text}</td>
-        <td className="w-3/5 px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td>
-        <td className="px-6 py-4 flex gap-5">
-          <FiEdit onClick={() => setOpenModalEdit(true)} cursor="pointer" className="text-blue-500" size={20} />
-          <Modal modalOpen={openModalEdit} setModalOpen={setOpenModalEdit}>
-            <form onSubmit={handleEditTask}>
-              <h3 className="font-bold text-lg">Edit Task</h3>
-              <div className="modal-action">
-                <input 
-                  value={taskToEdit}
-                  onChange={(e) => setTaskToEdit(e.target.value)}
-                  type="text" 
-                  placeholder="Type here" 
-                  className="input input-bordered w-full" 
-                />
-                <button type="submit" className="btn">
-                  Submit
-                </button>
+      <div className="w-2/4 mx-auto mt-5 card card-side bg-base-100 shadow-xl" key={task.id}>
+        {/* <figure><img className="h-36" src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" alt="Movie"/></figure> */}
+          <div className="card-body">
+            <h2 className="card-title  text-slate-500">{task.text}</h2>
+            <p className=" text-slate-400">{task.description}</p>
+              <div className="card-actions justify-end">
+                <FiEdit onClick={() => setOpenModalEdit(true)} cursor="pointer" className="text-blue-500" size={20} />
+                  <Modal modalOpen={openModalEdit} setModalOpen={setOpenModalEdit}>
+                    <div className='text-center w-full'>
+                      <h3 className="font-bold text-lg text-slate-500">Edit Task</h3>
+                      <form onSubmit={handleEditTask} action="" className="form mt-6">  
+                        <input 
+                          value={taskToEdit}
+                          onChange={(e) => setTaskToEdit(e.target.value)}
+                          type="text" 
+                          className="input input-bordered w-full" 
+                        />
+                        <input 
+                          value={descToEdit}
+                          onChange={(e) => setDescToEdit(e.target.value)}
+                          type="text" 
+                          className="input input-bordered w-full mt-2" 
+                        />
+                        <button type="submit" className="text-slate-500 btn mt-4">
+                          SUBMIT
+                        </button>
+                      </form>
+                    </div>
+                  </Modal>
+                <FiTrash2 onClick={() => setOpenModalDelete(true)} cursor="pointer" className="text-red-500" size={20} />
+                  <Modal modalOpen={openModalDelete} setModalOpen={setOpenModalDelete}>
+                    <div className='text-center w-full'>
+                      <h3 className="text-lg mt-5 text-slate-500">Are you sure, you want to delete this task?</h3>
+                      <div className="w-full m-auto mt-10">
+                        <button 
+                          onClick={() => handleDeleteTask(task.id)} 
+                          className="btn text-slate-500">YES
+                        </button>
+                      </div>
+                    </div>
+                  </Modal>
               </div>
-            </form>
-          </Modal>
-          <FiTrash2 onClick={() => setOpenModalDelete(true)} cursor="pointer" className="text-red-500" size={20} />
-          <Modal modalOpen={openModalDelete} setModalOpen={setOpenModalDelete}>
-            <h3 className="text-lg mt-5">Are you sure, you want to delete this task?</h3>
-            <div className="modal-action">
-              <button 
-                onClick={() => handleDeleteTask(task.id)} 
-                className="btn">YES
-              </button>
-            </div>
-          </Modal>
-        </td>
-      </tr>
+          </div>
+      </div>
     );
 };
 
