@@ -15,13 +15,15 @@ const Task: React.FC<TaskProps> = ({ task }) => {
     const router = useRouter();
     const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
     const [taskToEdit, setTaskToEdit] = useState<string>(task.text);
+    const [imageToEdit, setImageToEdit] = useState<string>(task.image);
     const handleEditTask: FormEventHandler<HTMLFormElement> = 
     async (e) => {
       e.preventDefault();
       await editTodo({
         id: task.id,
         text: taskToEdit,
-        description: descToEdit
+        description: descToEdit,
+        image: imageToEdit
       })
       setTaskToEdit("");
       setDescToEdit("");

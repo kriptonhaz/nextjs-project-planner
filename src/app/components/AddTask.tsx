@@ -11,25 +11,35 @@ const AddTask = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [newTaskValue, setNewTaskValue] = useState<string>("");
     const [newDescriptionValue, setNewDescriptioValue] = useState<string>("");
+    const [image, setImage] =  useState<string>("");
     const handleSubmitNewTask: FormEventHandler<HTMLFormElement> = 
     async (e) => {
       e.preventDefault();
+      console.log(e.target)
+      if(!newTaskValue) return console.log("Don't Have New Task")
       // console.log(newTaskValue);
       await addTodo({
         id: uuidv4(),
         text: newTaskValue,
-        description: newDescriptionValue
+        description: newDescriptionValue,
+        image: image
       })
       setNewTaskValue("");
       setNewDescriptioValue("");
+      setImage("");
       setModalOpen(false);
       router.refresh();
   };
 
     return (
         <div className='text-center w-full'>
-          <button onClick={() => setModalOpen(true)} className='w-2/4 bg-transparent hover:bg-slate-500 text-slate-500 font-semibold hover:text-white py-2 px-4 border border-slate-500 hover:border-transparent rounded'>
-          Add a New Task
+          <button 
+            onClick={() => setModalOpen(true)} 
+            className='w-2/4 bg-transparent hover:bg-slate-500 
+            text-slate-500 font-semibold hover:text-white 
+            py-2 px-4 border border-slate-500 hover:border-transparent rounded'
+          >
+            Add a New Task
           </button>
           <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
             <h3 className="font-bold text-lg text-slate-500">Add New Task</h3>
@@ -48,6 +58,11 @@ const AddTask = () => {
                   placeholder="Description" 
                   className="input input-bordered w-full mt-2" 
                 />
+                {/* <input 
+                  onChange={(e) => setImage(e.target.files[0])}
+                  type="file"
+                  name="file"
+                /> */}
                 <button type="submit" className="text-slate-500 btn mt-4">
                   SUBMIT
                 </button>
